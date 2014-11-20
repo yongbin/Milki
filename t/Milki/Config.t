@@ -109,21 +109,17 @@ EOF
     }
 }
 
-done_testing();
-
-__DATA__
-
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     my @base_imports = qw(
         AuthenCookie
-        +Silki::Plugin::ErrorHandling
+        +Milki::Plugin::ErrorHandling
         Session::AsObject
         Session::State::URI
-        +Silki::Plugin::Session::Store::Silki
+        +Milki::Plugin::Session::Store::Milki
         RedirectAndDetach
         SubRequest
         Unicode
@@ -137,9 +133,9 @@ Silki::Config->_clear_instance();
         'catalyst imports by default in dev setting'
     );
 
-    Silki::Config->_clear_instance();
+    Milki::Config->_clear_instance();
 
-    $config = Silki::Config->instance();
+    $config = Milki::Config->instance();
 
     $config->_set_is_production(1);
 
@@ -149,9 +145,9 @@ Silki::Config->_clear_instance();
     is_deeply( $config->_build_catalyst_imports(),
         [@base_imports], 'catalyst imports by default in production setting' );
 
-    Silki::Config->_clear_instance();
+    Milki::Config->_clear_instance();
 
-    $config = Silki::Config->instance();
+    $config = Milki::Config->instance();
 
     $config->_set_is_production(0);
 
@@ -163,9 +159,9 @@ Silki::Config->_clear_instance();
     is_deeply( $config->_build_catalyst_imports(),
         [@base_imports], 'catalyst imports by default in profiling setting' );
 
-    Silki::Config->_clear_instance();
+    Milki::Config->_clear_instance();
 
-    $config = Silki::Config->instance();
+    $config = Milki::Config->instance();
 
     $config->_set_is_profiling(0);
 
@@ -183,20 +179,23 @@ Silki::Config->_clear_instance();
     }
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     my @roles = qw(
-        Silki::AppRole::Domain
-        Silki::AppRole::RedirectWithError
-        Silki::AppRole::Tabs
-        Silki::AppRole::User
+        Milki::AppRole::Domain
+        Milki::AppRole::RedirectWithError
+        Milki::AppRole::Tabs
+        Milki::AppRole::User
     );
 
     is_deeply( $config->_build_catalyst_roles(), \@roles, 'catalyst roles' );
 }
+done_testing();
+
+__DATA__
 
 Silki::Config->_clear_instance();
 
