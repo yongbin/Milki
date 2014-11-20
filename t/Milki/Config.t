@@ -15,7 +15,7 @@ use Milki::Config;
 my $dir = tempdir( CLEANUP => 1 );
 
 $ENV{HARNESS_ACTIVE}       = 0;
-$ENV{SILKI_CONFIG_TESTING} = 1;
+$ENV{MILKI_CONFIG_TESTING} = 1;
 
 {
     my $config = Milki::Config->instance();
@@ -25,89 +25,93 @@ $ENV{SILKI_CONFIG_TESTING} = 1;
 }
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     is( $config->_build_secret, 'a big secret',
         'secret has a basic default in dev environment' );
 }
 
 {
-    local $ENV{SILKI_CONFIG} = '/path/to/nonexistent/file.conf';
+    local $ENV{MILKI_CONFIG} = '/path/to/nonexistent/file.conf';
 
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     $config->_clear_config_file();
 
     throws_ok(
         sub { $config->_build_config_hash() },
-        qr/\QNonexistent config file in SILKI_CONFIG env var/,
-        'SILKI_CONFIG pointing to bad file throws an error'
+        qr/\QNonexistent config file in MILKI_CONFIG env var/,
+        'MILKI_CONFIG pointing to bad file throws an error'
     );
 }
 
 {
     my $dir = tempdir( CLEANUP => 1 );
-    my $file = "$dir/silki.conf";
+    my $file = "$dir/milki.conf";
     open my $fh, '>', $file;
     print {$fh} <<'EOF';
-[Silki]
+[Milki]
 secret = foobar
 EOF
     close $fh;
 
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     {
-        local $ENV{SILKI_CONFIG} = $file;
+        local $ENV{MILKI_CONFIG} = $file;
 
         $config->_clear_config_file();
 
         is_deeply(
             $config->_build_config_hash(),
-            { Silki => { secret => 'foobar' }, },
-            'config hash uses data from file in SILKI_CONFIG'
+            { Milki => { secret => 'foobar' }, },
+            'config hash uses data from file in MILKI_CONFIG'
         );
     }
 
     open $fh, '>', $file;
     print {$fh} <<'EOF';
-[Silki]
+[Milki]
 is_production = 1
 EOF
     close $fh;
 
     {
-        local $ENV{SILKI_CONFIG} = $file;
+        local $ENV{MILKI_CONFIG} = $file;
 
         $config->_clear_config_file();
 
         throws_ok(
             sub { $config->_build_config_hash() },
-            qr/\QYou must supply a value for [Silki] - secret when running Silki in production/,
+            qr/\QYou must supply a value for [Milki] - secret when running Milki in production/,
             'If is_production is true in config, there must be a secret defined'
         );
     }
 
     open $fh, '>', $file;
     print {$fh} <<'EOF';
-[Silki]
+[Milki]
 is_production = 1
 secret = foobar
 EOF
     close $fh;
 
     {
-        local $ENV{SILKI_CONFIG} = $file;
+        local $ENV{MILKI_CONFIG} = $file;
 
         $config->_clear_config_file();
 
         is_deeply(
             $config->_build_config_hash(),
-            { Silki => { secret => 'foobar', is_production => 1, }, },
+            { Milki => { secret => 'foobar', is_production => 1, }, },
             'config hash with is_production true and a secret defined'
         );
     }
 }
+
+done_testing();
+
+__DATA__
 
 Silki::Config->_clear_instance();
 
