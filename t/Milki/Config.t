@@ -193,14 +193,11 @@ Milki::Config->_clear_instance();
 
     is_deeply( $config->_build_catalyst_roles(), \@roles, 'catalyst roles' );
 }
-done_testing();
 
-__DATA__
-
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     is( $config->_build_is_profiling(), 0, 'is_profiling defaults to false' );
 
