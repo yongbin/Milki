@@ -288,11 +288,11 @@ Milki::Config->_clear_instance();
     );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
     my $dir = tempdir( CLEANUP => 1 );
-    my $file = "$dir/silki.conf";
+    my $file = "$dir/milki.conf";
     open my $fh, '>', $file;
     print {$fh} <<'EOF';
 [dirs]
@@ -304,12 +304,12 @@ EOF
     close $fh;
 
     no warnings 'redefine';
-    local *Silki::Config::_ensure_dir = sub {return};
+    local *Milki::Config::_ensure_dir = sub {return};
 
     {
-        local $ENV{SILKI_CONFIG} = $file;
+        local $ENV{MILKI_CONFIG} = $file;
 
-        my $config = Silki::Config->instance();
+        my $config = Milki::Config->instance();
 
         is( $config->_build_var_lib_dir(),
             dir('/foo/var/lib'),
