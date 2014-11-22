@@ -328,10 +328,11 @@ EOF
     }
 }
 
-Silki::Config->_clear_instance();
+
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     my $cat = $config->_build_catalyst_config();
 
@@ -344,8 +345,8 @@ Silki::Config->_clear_instance();
         {
             expires          => 300,
             dbi_table        => q{"Session"},
-            dbi_dbh          => 'Silki::Plugin::Session::Store::Silki',
-            object_class     => 'Silki::Web::Session',
+            dbi_dbh          => 'Milki::Plugin::Session::Store::Milki',
+            object_class     => 'Milki::Web::Session',
             rewrite_body     => 0,
             rewrite_redirect => 1,
         },
@@ -355,7 +356,7 @@ Silki::Config->_clear_instance();
     is_deeply(
         $cat->{authen_cookie},
         {
-            name       => 'Silki-user',
+            name       => 'Milki-user',
             path       => '/',
             mac_secret => $config->secret(),
         },
