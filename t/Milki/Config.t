@@ -530,22 +530,22 @@ Milki::Config->_clear_instance();
     );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     is( $config->static_path_prefix(),
         q{}, 'in dev environment, no static path prefix' );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
     my $dir     = tempdir( CLEANUP => 1 );
     my $etc_dir = tempdir( CLEANUP => 1 );
 
-    my $file = "$dir/silki.conf";
+    my $file = "$dir/milki.conf";
     open my $fh, '>', $file;
     print {$fh} <<"EOF";
 [dirs]
@@ -553,13 +553,13 @@ etc = $etc_dir
 EOF
     close $fh;
 
-    local $ENV{SILKI_CONFIG} = $file;
+    local $ENV{MILKI_CONFIG} = $file;
 
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     $config->_set_is_production(1);
 
-    my $version = $Silki::Config::VERSION || 'wc';
+    my $version = $Milki::Config::VERSION || 'wc';
     is(
         $config->static_path_prefix(),
         q{/} . $version,
@@ -567,13 +567,13 @@ EOF
     );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
     my $dir     = tempdir( CLEANUP => 1 );
     my $etc_dir = tempdir( CLEANUP => 1 );
 
-    my $file = "$dir/silki.conf";
+    my $file = "$dir/milki.conf";
     open my $fh, '>', $file;
     print {$fh} <<"EOF";
 [dirs]
@@ -581,25 +581,25 @@ etc = $etc_dir
 EOF
     close $fh;
 
-    local $ENV{SILKI_CONFIG} = $file;
+    local $ENV{MILKI_CONFIG} = $file;
 
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     $config->_set_is_production(1);
 
     $config->_set_path_prefix('/foo');
 
-    my $version = $Silki::Config::VERSION || 'wc';
+    my $version = $Milki::Config::VERSION || 'wc';
 
     is( $config->static_path_prefix(), qq{/foo/$version},
         'in prod environment, static path prefix includes revision number and general prefix'
     );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     my $dir = tempdir( CLEANUP => 1 );
 
