@@ -251,40 +251,40 @@ Milki::Config->_clear_instance();
     );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     $config->_set_is_production(1);
 
     no warnings 'redefine';
-    local *Silki::Config::_ensure_dir = sub {return};
+    local *Milki::Config::_ensure_dir = sub {return};
 
     is( $config->_build_var_lib_dir(),
-        '/var/lib/silki',
-        'var lib dir defaults to /var/lib/silki in production' );
+        '/var/lib/milki',
+        'var lib dir defaults to /var/lib/milki in production' );
 
-    my $share_dir = dir( dir( $INC{'Silki/Config.pm'} )->parent(),
-        'auto', 'share', 'dist', 'Silki' )->absolute()->cleanup();
+    my $share_dir = dir( dir( $INC{'Milki/Config.pm'} )->parent(),
+        'auto', 'share', 'dist', 'Milki' )->absolute()->cleanup();
 
     is( $config->_build_share_dir(),
         $share_dir,
-        'share dir defaults to /usr/local/share/silki in production' );
+        'share dir defaults to /usr/local/share/milki in production' );
 
     is( $config->_build_etc_dir(),
-        '/etc/silki', 'etc dir defaults to /etc/silki in production' );
+        '/etc/milki', 'etc dir defaults to /etc/milki in production' );
 
     is( $config->_build_cache_dir(),
-        '/var/cache/silki',
-        'cache dir defaults to /var/cache/silki in production' );
+        '/var/cache/milki',
+        'cache dir defaults to /var/cache/milki in production' );
 
     is( $config->_build_files_dir(),
-        '/var/cache/silki/files',
-        'files dir defaults to /var/cache/silki/files in production' );
+        '/var/cache/milki/files',
+        'files dir defaults to /var/cache/milki/files in production' );
 
-    is( $config->_build_thumbnails_dir(), '/var/cache/silki/thumbnails',
-        'thumbnails dir defaults to /var/cache/silki/thumbnails in production'
+    is( $config->_build_thumbnails_dir(), '/var/cache/milki/thumbnails',
+        'thumbnails dir defaults to /var/cache/milki/thumbnails in production'
     );
 }
 
