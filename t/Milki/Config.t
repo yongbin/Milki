@@ -388,23 +388,23 @@ Milki::Config->_clear_instance();
     ok( !$cat->{static}, 'no static config for prod environment' );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     is_deeply(
         $config->_build_dbi_config(),
-        { dsn => 'dbi:Pg:dbname=Silki', username => q{}, password => q{}, },
+        { dsn => 'dbi:Pg:dbname=Milki', username => q{}, password => q{}, },
         'default dbi config'
     );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
     my $dir = tempdir( CLEANUP => 1 );
-    my $file = "$dir/silki.conf";
+    my $file = "$dir/milki.conf";
     open my $fh, '>', $file;
     print {$fh} <<'EOF';
 [database]
@@ -416,9 +416,9 @@ password = pass
 EOF
     close $fh;
 
-    local $ENV{SILKI_CONFIG} = $file;
+    local $ENV{MILKI_CONFIG} = $file;
 
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     is_deeply(
         $config->_build_dbi_config(),
@@ -431,10 +431,10 @@ EOF
     );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     my $home_dir = dir( File::HomeDir->my_home() );
 
@@ -444,9 +444,9 @@ Silki::Config->_clear_instance();
         $config->_build_mason_config(),
         {
             comp_root => $share_dir->subdir('mason'),
-            data_dir => $home_dir->subdir( '.silki', 'cache', 'mason', 'web' ),
+            data_dir => $home_dir->subdir( '.milki', 'cache', 'mason', 'web' ),
             error_mode           => 'fatal',
-            in_package           => 'Silki::Mason::Web',
+            in_package           => 'Milki::Mason::Web',
             use_match            => 0,
             default_escape_flags => 'h',
         },
@@ -454,13 +454,13 @@ Silki::Config->_clear_instance();
     );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     no warnings 'redefine';
-    local *Silki::Config::_ensure_dir = sub {return};
+    local *Milki::Config::_ensure_dir = sub {return};
 
     $config->_set_is_production(1);
 
@@ -470,22 +470,22 @@ Silki::Config->_clear_instance();
         $config->_build_mason_config(),
         {
             comp_root                => $share_dir->subdir('mason'),
-            data_dir                 => '/var/cache/silki/mason/web',
+            data_dir                 => '/var/cache/milki/mason/web',
             error_mode               => 'fatal',
-            in_package               => 'Silki::Mason::Web',
+            in_package               => 'Milki::Mason::Web',
             use_match                => 0,
             default_escape_flags     => 'h',
             static_source            => 1,
-            static_source_touch_file => '/etc/silki/mason-touch',
+            static_source_touch_file => '/etc/Milki/mason-touch',
         },
         'mason config in production'
     );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     my $home_dir = dir( File::HomeDir->my_home() );
 
@@ -496,21 +496,21 @@ Silki::Config->_clear_instance();
         {
             comp_root => $share_dir->subdir('email-templates'),
             data_dir =>
-                $home_dir->subdir( '.silki', 'cache', 'mason', 'email' ),
+                $home_dir->subdir( '.milki', 'cache', 'mason', 'email' ),
             error_mode => 'fatal',
-            in_package => 'Silki::Mason::Email',
+            in_package => 'Milki::Mason::Email',
         },
         'default mason config for email'
     );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     no warnings 'redefine';
-    local *Silki::Config::_ensure_dir = sub {return};
+    local *Milki::Config::_ensure_dir = sub {return};
 
     $config->_set_is_production(1);
 
@@ -520,11 +520,11 @@ Silki::Config->_clear_instance();
         $config->_build_mason_config_for_email(),
         {
             comp_root                => $share_dir->subdir('email-templates'),
-            data_dir                 => '/var/cache/silki/mason/email',
+            data_dir                 => '/var/cache/milki/mason/email',
             error_mode               => 'fatal',
-            in_package               => 'Silki::Mason::Email',
+            in_package               => 'Milki::Mason::Email',
             static_source            => 1,
-            static_source_touch_file => '/etc/silki/mason-touch',
+            static_source_touch_file => '/etc/Milki/mason-touch',
         },
         'mason config for email in production'
     );
