@@ -207,17 +207,17 @@ Milki::Config->_clear_instance();
         1, 'is_profiling defaults is true if Devel::NYTProf is loaded' );
 }
 
-Silki::Config->_clear_instance();
+Milki::Config->_clear_instance();
 
 {
-    my $config = Silki::Config->instance();
+    my $config = Milki::Config->instance();
 
     my $home_dir = dir( File::HomeDir->my_home() );
 
     is(
         $config->_build_var_lib_dir(),
-        $home_dir->subdir( '.silki', 'var', 'lib' ),
-        'var lib dir defaults to $HOME/.silki/var/lib'
+        $home_dir->subdir( '.milki', 'var', 'lib' ),
+        'var lib dir defaults to $HOME/.milki/var/lib'
     );
 
     is(
@@ -228,26 +228,26 @@ Silki::Config->_clear_instance();
 
     is(
         $config->_build_etc_dir(),
-        $home_dir->subdir( '.silki', 'etc' ),
-        'etc dir defaults to $HOME/.silki/etc'
+        $home_dir->subdir( '.milki', 'etc' ),
+        'etc dir defaults to $HOME/.milki/etc'
     );
 
     is(
         $config->_build_cache_dir(),
-        $home_dir->subdir( '.silki', 'cache' ),
-        'cache dir defaults to $HOME/.silki/cache'
+        $home_dir->subdir( '.milki', 'cache' ),
+        'cache dir defaults to $HOME/.milki/cache'
     );
 
     is(
         $config->_build_files_dir(),
-        $home_dir->subdir( '.silki', 'cache', 'files' ),
-        'files dir defaults to $HOME/.silki/cache/files'
+        $home_dir->subdir( '.milki', 'cache', 'files' ),
+        'files dir defaults to $HOME/.milki/cache/files'
     );
 
     is(
         $config->_build_thumbnails_dir(),
-        $home_dir->subdir( '.silki', 'cache', 'thumbnails' ),
-        'thumbnails dir defaults to $HOME/.silki/cache/thumbnails'
+        $home_dir->subdir( '.milki', 'cache', 'thumbnails' ),
+        'thumbnails dir defaults to $HOME/.milki/cache/thumbnails'
     );
 }
 
