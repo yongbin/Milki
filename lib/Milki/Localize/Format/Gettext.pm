@@ -59,13 +59,16 @@ sub on_date {
 
     my $id;
 
-    given ($day_key) {
-        when ('today')          { $id = loc('Today') }
-        when ('yesterday')      { $id = loc('Yesterday') }
-        when ('two_days_ago')   { $id = loc('Two days ago') }
-        when ('three_days_ago') { $id = loc('Three days ago') }
-        when ('any')            { $id = loc('on %date(%1)') }
-        default { die "Unknown day key: $day_key" }
+    {
+        no warnings 'experimental';
+        given ($day_key) {
+            when ('today')          { $id = loc('Today') }
+            when ('yesterday')      { $id = loc('Yesterday') }
+            when ('two_days_ago')   { $id = loc('Two days ago') }
+            when ('three_days_ago') { $id = loc('Three days ago') }
+            when ('any')            { $id = loc('on %date(%1)') }
+            default { die "Unknown day key: $day_key" }
+        }
     }
 
     return Milki::I18N::loc( $id, $dt );
@@ -82,13 +85,18 @@ sub on_datetime {
 
     my $id;
 
-    given ($day_key) {
-        when ('today')          { $id = loc('Today %at_time(%1)') }
-        when ('yesterday')      { $id = loc('Yesterday %at_time(%1)') }
-        when ('two_days_ago')   { $id = loc('Two days ago %at_time(%1)') }
-        when ('three_days_ago') { $id = loc('Three days ago %at_time(%1)') }
-        when ('any')            { $id = loc('on %date(%1) %at_time(%1)') }
-        default { die "Unknown day key: $day_key" }
+    {
+        no warnings 'experimental';
+        given ($day_key) {
+            when ('today')        { $id = loc('Today %at_time(%1)') }
+            when ('yesterday')    { $id = loc('Yesterday %at_time(%1)') }
+            when ('two_days_ago') { $id = loc('Two days ago %at_time(%1)') }
+            when ('three_days_ago') {
+                $id = loc('Three days ago %at_time(%1)')
+            }
+            when ('any') { $id = loc('on %date(%1) %at_time(%1)') }
+            default { die "Unknown day key: $day_key" }
+        }
     }
 
     return Milki::I18N::loc( $id, $dt );
@@ -153,13 +161,18 @@ sub datetime {
 
     my $id;
 
-    given ($day_key) {
-        when ('today')          { $id = loc('Today %at_time(%1)') }
-        when ('yesterday')      { $id = loc('Yesterday %at_time(%1)') }
-        when ('two_days_ago')   { $id = loc('Two days ago %at_time(%1)') }
-        when ('three_days_ago') { $id = loc('Three days ago %at_time(%1)') }
-        when ('any')            { $id = loc('%date(%1) %at_time(%1)') }
-        default { die "Unknown day key: $day_key" }
+    {
+        no warnings 'experimental';
+        given ($day_key) {
+            when ('today')        { $id = loc('Today %at_time(%1)') }
+            when ('yesterday')    { $id = loc('Yesterday %at_time(%1)') }
+            when ('two_days_ago') { $id = loc('Two days ago %at_time(%1)') }
+            when ('three_days_ago') {
+                $id = loc('Three days ago %at_time(%1)')
+            }
+            when ('any') { $id = loc('%date(%1) %at_time(%1)') }
+            default { die "Unknown day key: $day_key" }
+        }
     }
 
     return Milki::I18N::loc( $id, $dt );
