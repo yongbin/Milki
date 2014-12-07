@@ -1,0 +1,39 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use autodie qw( :all );
+
+use lib 'lib', 'inc';
+
+use FindBin;
+use MIME::Base64 qw( encode_base64 );
+use Milki::DBInstaller;
+use Storable qw( nfreeze );
+
+Milki::DBInstaller->new(
+    name             => 'Milki',
+    drop             => 1,
+    seed             => 0,
+    quiet            => 0,
+    _existing_config => {},        # XXX - uber hack!
+)->update_or_install_db();
+
+require Milki::Schema;
+
+open my $fh, '>', 't/lib/Milki/Test/FakeSchema.pm';
+
+print {$fh}
+    sprintf( <<'EOF', encode_base64( nfreeze( Milki::Schema->Schema() ) ) );
+package Milki::Test::FakeSchema;
+
+use strict;
+use warnings;
+
+use MIME::Base64 qw( decode_base64 );
+use Storable qw( thaw );
+
+$Milki::Schema::TestSchema = thaw( decode_base64( '%s' ) );
+
+1;
+EOF
