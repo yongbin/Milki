@@ -1,6 +1,8 @@
 SET CLIENT_MIN_MESSAGES = ERROR;
 
-CREATE LANGUAGE plpgsql;
+CREATE OR REPLACE LANGUAGE plpgsql;
+
+CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
 
 CREATE DOMAIN email_address AS VARCHAR(255)
        CONSTRAINT valid_email_address CHECK ( VALUE ~ E'^.+@.+(?:\\..+)+' );
