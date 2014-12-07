@@ -12,11 +12,11 @@ use Milki::DBInstaller;
 use Storable qw( nfreeze );
 
 Milki::DBInstaller->new(
-    name             => 'MilkiTest',
+    name             => 'Milki',
     drop             => 1,
     seed             => 0,
-    quiet            => 1,
-    _existing_config => {},            # XXX - uber hack!
+    quiet            => 0,
+    _existing_config => {},        # XXX - uber hack!
 )->update_or_install_db();
 
 require Milki::Schema;
