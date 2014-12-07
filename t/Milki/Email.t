@@ -25,9 +25,7 @@ use Milki::Email;
 
     package Milki::Schema::User;
 
-    no warnings 'redefine';
-
-    my $user = Milki::Schema::User->new(
+    my $user = bless {
         user_id        => 42,
         display_name   => 'System User',
         username       => 'system-user',
@@ -35,9 +33,14 @@ use Milki::Email;
         password       => '*disabled*',
         is_system_user => 1,
         _from_query    => 1,
-    );
+        },
+        'Milki::Schema::User';
 
     sub SystemUser {$user}
+
+    sub email_address {
+        $user->{email_address};
+    }
 }
 
 Milki::Email::send_email(
