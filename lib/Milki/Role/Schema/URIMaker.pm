@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use namespace::autoclean;
 
-use MooseX::Params::Validate qw( validate );
+use MooseX::Params::Validate qw( validated_hash );
 use Milki::Types qw( Bool HashRef Str );
 use Milki::Util qw( string_is_empty );
 use Milki::URI qw( dynamic_uri );
@@ -20,7 +20,7 @@ sub uri {
     # MX::P::V doesn't handle class methods
     my $self = shift;
 
-    my %p = validate(
+    my %p = validated_hash(
         \@_,
         view      => { isa => Str,     optional => 1 },
         fragment  => { isa => Str,     optional => 1 },
