@@ -62,7 +62,9 @@ subtype OutputStream,
     },
     message { 'The output stream must be a Perl file handle or an object with a print method' };
 
-enum TableCellAlignment, qw( left right center );
+# monkey patch to supress enum related wanrings
+# original patch : http://git.urth.org/cgit.cgi/Markdent.git/commit/?id=a9f3a5f5322e99222088b0e43cb90496610050f2
+enum TableCellAlignment, [ qw( left right center ) ];
 
 subtype PosInt,
     as Int,
