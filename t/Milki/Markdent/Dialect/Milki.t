@@ -1,11 +1,10 @@
 use strict;
 use warnings;
 
-use Test::Markdent;
 use Test::Most;
 
 use lib 't/lib';
-
+use Milki::Test::Markdent;
 use Milki::Markdent::Handler::MinimalTree;
 use Milki::Markdent::Dialect::Milki::BlockParser;
 use Milki::Markdent::Dialect::Milki::SpanParser;
