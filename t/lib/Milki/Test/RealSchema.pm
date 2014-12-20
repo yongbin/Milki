@@ -5,8 +5,7 @@ use warnings;
 
 use DBD::Pg;
 use DBI;
-use File::Slurp qw( read_file );
-use Path::Class qw( file );
+use Path::Tiny;
 
 sub import {
     eval {
@@ -154,10 +153,10 @@ sub _run_ddl {
     sub _ddl_statements {
         return @DDL if @DDL;
 
-        my $file = file( $INC{'Milki/Test/RealSchema.pm'},
-            '..', '..', '..', '..', '..', 'schema', 'Milki.sql' );
+        my $file = path("$INC{'Milki/Test/RealSchema.pm'}")->parent(5)
+            ->child('schema/Milki.sql');
 
-        my $ddl = read_file( $file->resolve()->stringify() );
+        my $ddl = $file->slurp();
 
         for my $stmt ( split /\n\n+(?=^\S)/m, $ddl ) {
             $stmt =~ s/^--.+\n//gm;
