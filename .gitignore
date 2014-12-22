@@ -1,1 +1,3 @@
 t/lib/Milki/Test/FakeSchema.pm
+.DS_Store
+share/i18n/en.po
