@@ -520,6 +520,7 @@ sub _build_permissions {
         my $self = shift;
 
         local $Data::Dumper::Sortkeys = 1;
+        local $Data::Dumper::Indent   = 0;
         my $perms = Dumper( $self->permissions() );
 
         for my $name ( keys %SetsAsHashes ) {
