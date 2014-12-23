@@ -80,7 +80,7 @@ test_email(
        \s+
        \Q</body>\E
       }xs,
-    qr{\QYou have created a user account on the \E\S+\Q server. You\E
+    qr{\QYou have created a user account on the \E\S+\Q server.\E\s+\QYou\E
        \s+
        \Qmust activate your user account (http://\E\S+?\)
        \s+
