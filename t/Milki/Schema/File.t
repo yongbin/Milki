@@ -27,23 +27,17 @@ my $user = Milki::Schema::User->GuestUser();
         wiki_id   => $wiki->wiki_id(),
     );
 
-    is(
-        $file->mime_type_description_for_lang('en'),
-        'plain text document',
-        'english lang mime type description'
-    );
+    is( $file->mime_type_description_for_lang('en'),
+        'Plain Text', 'english lang mime type description' );
 
     is(
-        $file->mime_type_description_for_lang('fr'),
-        'document texte brut',
-        'french lang mime type description'
+        $file->mime_type_description_for_lang('it'),
+        'Testo semplice',
+        'italian lang mime type description'
     );
 
-    is(
-        $file->mime_type_description_for_lang('foo'),
-        'plain text document',
-        'mime type description falls back to default lang'
-    );
+    is( $file->mime_type_description_for_lang('foo'),
+        'Plain Text', 'mime type description falls back to default lang' );
 
     ok( !$file->is_browser_displayable_image(),
         'file is not an image that can be displayed in a browser' );

@@ -139,6 +139,10 @@ sub mime_type_description_for_lang {
     my $self = shift;
     my $lang = shift;
 
+    my $share_dir = Milki::Config->new()->share_dir();
+    @File::MimeInfo::DIRS = ("$share_dir/mime");
+    File::MimeInfo->rehash();
+
     my $desc = describe( $self->mime_type(), $lang );
     $desc ||= describe( $self->mime_type() );
 
