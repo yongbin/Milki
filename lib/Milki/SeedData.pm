@@ -26,29 +26,29 @@ sub seed_data {
 
     Milki::Schema::Domain->EnsureRequiredDomainsExist();
 
-    # require Milki::Schema::User;
+    require Milki::Schema::User;
 
-    # Milki::Schema::User->EnsureRequiredUsersExist();
+    Milki::Schema::User->EnsureRequiredUsersExist();
 
     require Milki::Schema::Account;
 
     Milki::Schema::Account->EnsureRequiredAccountsExist();
 
-    # require Milki::Schema::Role;
+    require Milki::Schema::Role;
 
-    # print "\n" if $VERBOSE;
+    print "\n" if $VERBOSE;
 
-    # my $admin = _make_admin_user();
-    # my $regular = _make_regular_user() unless $p{production};
+    my $admin = _make_admin_user();
+    my $regular = _make_regular_user() unless $p{production};
 
-    # if ( $p{production} ) {
-    #     _make_production_wiki($admin);
-    # }
-    # else {
-    #     _make_first_wiki( $admin, $regular );
-    #     _make_second_wiki( $admin, $regular );
-    #     _make_third_wiki( $admin, $regular );
-    # }
+    if ( $p{production} ) {
+        _make_production_wiki($admin);
+    }
+    else {
+        _make_first_wiki( $admin, $regular );
+        _make_second_wiki( $admin, $regular );
+        _make_third_wiki( $admin, $regular );
+    }
 }
 
 sub _make_admin_user {
