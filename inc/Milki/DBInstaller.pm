@@ -247,7 +247,9 @@ EOF
     $commands .= ' OWNER ' . $self->username() if defined $self->username();
     $commands .= q{;};
 
-    local $ENV{PGPASSWORD} = $self->password();
+    unless ( $ENV{PGPASSWORD} ) {
+        local $ENV{PGPASSWORD} = $self->password();
+    }
 
     # When trying to issue a DROP with -c (command), you cannot also set
     # client_min_messages, so we make a temp file and feed it in with -f.
@@ -258,6 +260,7 @@ EOF
     print {$fh} $commands;
     close $fh;
 
+    print map {"$_ => $ENV{$_}\n"} grep { $_ =~ /^pg/i } keys %ENV;
     system( 'psql', 'template1', $self->_psql_args(), '-q', '-w', '-f',
         $file );
 }
@@ -269,7 +272,9 @@ sub _build_db {
 
     $self->_msg("Creating schema from $schema_file");
 
-    local $ENV{PGPASSWORD} = $self->password();
+    unless ( $ENV{PGPASSWORD} ) {
+        local $ENV{PGPASSWORD} = $self->password();
+    }
 
     system( 'psql', $self->name(), $self->_psql_args(), '-q', '-w', '-f',
         $schema_file )
