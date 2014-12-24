@@ -1,0 +1,38 @@
+requires "Moose" => "0";          # XXX
+requires "Catalyst" => "0";       # XXX
+requires "Test::Most" => "0";
+requires "Path::Tiny" => "0";
+requires "DateTime" => "0";
+requires "Markdent", "<= 0.21";
+requires "DBD::Pg";
+requires "Fey";
+requires "Fey::ORM";
+requires "Fey::Loader";
+requires "Data::Localize";
+requires "Authen::Passphrase::BlowfishCrypt";
+requires "File::HomeDir";
+requires "Email::Sender";
+requires "Email::Date";
+requires "IPC::System::Simple";
+requires 'DBD::Pg';
+requires 'Net::Interface';
+requires 'Config::INI::Reader';
+requires 'Email::Valid';
+requires 'Text::Autoformat';
+requires 'MooseX::MetaDescription';
+requires 'MooseX::Singleton';
+requires 'Log::Dispatch::Syslog';
+requires 'HTML::FormatText';
+requires 'Email::MessageID';
+requires 'URI::FromHash';
+requires 'String::Diff';
+requires 'DateTime::Format::Pg';
+requires 'Email::MIME::CreateHTML';
+requires 'File::MimeInfo';
+requires 'Lingua::EN::Inflect';
+requires 'HTML::Mason::Interp';
+requires 'Image::Magick';
+requires 'Image::Thumbnail';
+requires 'Locale::Maketext::Lexicon';
+requires 'Data::Localize::Gettext';
+requires 'Data::Localize::Format::Gettext';
